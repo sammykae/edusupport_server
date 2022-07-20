@@ -429,6 +429,7 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 		class_name,
 		quiz_type,
 		can_reload,
+		category,
 	} = req.body;
 
 	if (
@@ -440,7 +441,8 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 		!pass_mark ||
 		!class_name ||
 		!quiz_type ||
-		!can_reload
+		!can_reload ||
+		!category
 	) {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
@@ -510,6 +512,7 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 					JSON.stringify(class_name),
 					quiz_type,
 					can_reload,
+					JSON.stringify(category),
 					tname
 				);
 				if (quizzes.affectedRows > 0) {
@@ -529,6 +532,7 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 								class_name: class_name,
 								quiz_type: quiz_type,
 								can_reload: can_reload,
+								category: category,
 								created_by: tname,
 							},
 						],
@@ -556,6 +560,7 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 				JSON.stringify(class_name),
 				quiz_type,
 				can_reload,
+				JSON.stringify(category),
 				tname
 			);
 			if (quizzes.affectedRows > 0) {
@@ -575,6 +580,7 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 							class_name: class_name,
 							quiz_type: quiz_type,
 							can_reload: can_reload,
+							category: category,
 							created_by: tname,
 						},
 					],
@@ -665,6 +671,7 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 		status,
 		quiz_type,
 		can_reload,
+		category,
 	} = req.body;
 	if (
 		!quiz_id ||
@@ -677,7 +684,8 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 		!class_name ||
 		!status ||
 		!quiz_type ||
-		!can_reload
+		!can_reload ||
+		category
 	) {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
@@ -729,7 +737,8 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 								JSON.stringify(class_name),
 								status,
 								quiz_type,
-								can_reload
+								can_reload,
+								JSON.stringify(category)
 							);
 							await Quizzes.updateName(quiz_id, newQuizName);
 
@@ -758,7 +767,8 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 							JSON.stringify(class_name),
 							status,
 							quiz_type,
-							can_reload
+							can_reload,
+							JSON.stringify(category)
 						);
 						await Quizzes.updateName(quiz_id, newQuizName);
 
@@ -812,7 +822,8 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 							JSON.stringify(class_name),
 							status,
 							quiz_type,
-							can_reload
+							can_reload,
+							JSON.stringify(category)
 						);
 						await Quizzes.updateName(quiz_id, newQuizName);
 
@@ -841,7 +852,8 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 						JSON.stringify(class_name),
 						status,
 						quiz_type,
-						can_reload
+						can_reload,
+						JSON.stringify(category)
 					);
 
 					await Quizzes.updateName(quiz_id, newQuizName);

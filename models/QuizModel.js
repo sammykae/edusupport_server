@@ -15,14 +15,16 @@ class Quizzes {
 		class_name,
 		quiz_type,
 		can_reload,
+		category,
 		created_by
 	) {
-		let sql = `insert into quizzes (quiz_id,admin_id,teacher_id,quiz_name,no_level,dur_level,subject,point,pass_mark,class_id,class_name,quiz_type,reload,created_by,date_created) values(
+		let sql = `insert into quizzes (quiz_id,admin_id,teacher_id,quiz_name,no_level,category,dur_level,subject,point,pass_mark,class_id,class_name,quiz_type,reload,created_by,date_created) values(
 			'${quiz_id}',
 			'${admin_id}',
 			'${teacher_id}',
             '${quiz_name}',
 			'${no_level}',
+			'${category}',
             '${dur_level}',
             '${subject}',
 			'${point}',
@@ -51,7 +53,8 @@ class Quizzes {
 		class_name,
 		status,
 		quiz_type,
-		can_reload
+		can_reload,
+		category
 	) {
 		let sql;
 		if (status === "publish") {
@@ -59,6 +62,7 @@ class Quizzes {
 
         quiz_name='${quiz_name}',
         no_level='${no_level}',
+		category='${category}',
         dur_level= '${dur_level}',
         subject='${subject}',
         class_id='${class_id}',
@@ -76,6 +80,7 @@ class Quizzes {
 
         quiz_name='${quiz_name}',
         no_level='${no_level}',
+		category='${category}',
         dur_level= '${dur_level}',
         subject='${subject}',
         class_id='${class_id}',
