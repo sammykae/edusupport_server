@@ -81,7 +81,6 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 				}
 			} else {
 				let [que, _] = await Quizzes.getQuestionStudent(id);
-
 				if (ans.length > 0 && que.length > 0) {
 					ans.map((e) => {
 						que.map((d) => {
@@ -153,6 +152,35 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 											student_ans: e.options,
 											correct: false,
 										});
+									}
+								} else if (d.type === "match") {
+									if (d?.answers?.length === e?.options?.length) {
+										let check = true;
+										for (let index = 0; index < d?.answers?.length; index++) {
+											if (
+												d?.answers[index]?.match !== e?.options[index]?.match
+											) {
+												check = false;
+											}
+										}
+
+										if (check) {
+											result.push({
+												question: d.question,
+												type: d.type,
+												correct_ans: d.answers,
+												student_ans: e.options,
+												correct: true,
+											});
+										} else {
+											result.push({
+												question: d.question,
+												type: d.type,
+												correct_ans: d.answers,
+												student_ans: e.options,
+												correct: false,
+											});
+										}
 									}
 								} else {
 									if (e.options === d.answers[0]) {

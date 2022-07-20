@@ -877,6 +877,20 @@ const score = asyncHandler(async (req, res, next) => {
 									rightQue++;
 								}
 							}
+						} else if (d.type === "match") {
+							if (d.answers.length === e.options.length) {
+								let check = true;
+								for (let index = 0; index < d.answers.length; index++) {
+									if (d?.answers[index]?.match !== e?.options[index]?.match) {
+										check = false;
+									}
+								}
+
+								if (check) {
+									student_point += point;
+									rightQue++;
+								}
+							}
 						} else {
 							if (e.options === d.answers[0]) {
 								student_point += point;
