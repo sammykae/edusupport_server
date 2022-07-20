@@ -915,6 +915,16 @@ const setQuestion = asyncHandler(async (req, res, next) => {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
 	}
+	const [quizes, ___] = await Quizzes.findById(tid, quiz_id);
+	if (quizes.length <= 0) {
+		res.status(400);
+		throw new Error("No Quiz Found");
+	} else {
+		if (quizes[0].status === "publish") {
+			res.status(400);
+			throw new Error("You can't add question to a published quiz");
+		}
+	}
 	let op = options;
 	let as = answers;
 
@@ -947,6 +957,16 @@ const setSpellingQuestion = asyncHandler(async (req, res, next) => {
 	if (!quiz_id || !type || !level || !address || !word || !hint || !category) {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
+	}
+	const [quizes, ___] = await Quizzes.findById(tid, quiz_id);
+	if (quizes.length <= 0) {
+		res.status(400);
+		throw new Error("No Quiz Found");
+	} else {
+		if (quizes[0].status === "publish") {
+			res.status(400);
+			throw new Error("You can't add question to a published quiz");
+		}
 	}
 
 	const [que, __] = await Quizzes.setSpellingQuestion(
@@ -988,6 +1008,16 @@ const updateQuestion = asyncHandler(async (req, res, next) => {
 	) {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
+	}
+	const [quizes, ___] = await Quizzes.findById(tid, quiz_id);
+	if (quizes.length <= 0) {
+		res.status(400);
+		throw new Error("No Quiz Found");
+	} else {
+		if (quizes[0].status === "publish") {
+			res.status(400);
+			throw new Error("You can't add question to a published quiz");
+		}
 	}
 	let op = options;
 	let as = answers;
@@ -1031,6 +1061,16 @@ const updateSpellingQuestion = asyncHandler(async (req, res, next) => {
 	) {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
+	}
+	const [quizes, ___] = await Quizzes.findById(tid, quiz_id);
+	if (quizes.length <= 0) {
+		res.status(400);
+		throw new Error("No Quiz Found");
+	} else {
+		if (quizes[0].status === "publish") {
+			res.status(400);
+			throw new Error("You can't add question to a published quiz");
+		}
 	}
 
 	const [que, __] = await Quizzes.updateSpellingQuestion(
