@@ -9,7 +9,7 @@ var cron = require("node-cron");
 const nodemailer = require("nodemailer");
 const Admin = require("./models/AdminModel");
 app.use(cors());
-
+//
 // BODY PARSING
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
