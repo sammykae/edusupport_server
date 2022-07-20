@@ -685,7 +685,7 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 		!status ||
 		!quiz_type ||
 		!can_reload ||
-		category
+		!category
 	) {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
@@ -900,9 +900,18 @@ const setQuestion = asyncHandler(async (req, res, next) => {
 	const reqEmail = req.teacher[0][0].email;
 	const [teacher, _] = await Teacher.findByEmail(reqEmail);
 	const tid = teacher[0].teacher_id;
-	const { quiz_id, question, type, level, options, answers } = req.body;
+	const { quiz_id, question, type, level, options, answers, category } =
+		req.body;
 
-	if (!quiz_id || !question || !type || !level || !options || !answers) {
+	if (
+		!quiz_id ||
+		!question ||
+		!type ||
+		!level ||
+		!options ||
+		!answers ||
+		!category
+	) {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
 	}
@@ -916,7 +925,8 @@ const setQuestion = asyncHandler(async (req, res, next) => {
 		level,
 		op,
 		as,
-		tid
+		tid,
+		category
 	);
 	if (que.length > 0) {
 		res
@@ -932,9 +942,9 @@ const setSpellingQuestion = asyncHandler(async (req, res, next) => {
 	const reqEmail = req.teacher[0][0].email;
 	const [teacher, _] = await Teacher.findByEmail(reqEmail);
 	const tid = teacher[0].teacher_id;
-	const { quiz_id, type, level, address, word, hint } = req.body;
+	const { quiz_id, type, level, address, word, hint, category } = req.body;
 
-	if (!quiz_id || !type || !level || !address || !word || !hint) {
+	if (!quiz_id || !type || !level || !address || !word || !hint || !category) {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
 	}
@@ -946,7 +956,8 @@ const setSpellingQuestion = asyncHandler(async (req, res, next) => {
 		address,
 		word,
 		hint,
-		tid
+		tid,
+		category
 	);
 	if (que.length > 0) {
 		res
@@ -962,9 +973,19 @@ const updateQuestion = asyncHandler(async (req, res, next) => {
 	const reqEmail = req.teacher[0][0].email;
 	const [teacher, _] = await Teacher.findByEmail(reqEmail);
 	const tid = teacher[0].teacher_id;
-	const { id, quiz_id, question, type, level, options, answers } = req.body;
+	const { id, quiz_id, question, type, level, options, answers, category } =
+		req.body;
 
-	if (!id || !quiz_id || !question || !type || !level || !options || !answers) {
+	if (
+		!id ||
+		!quiz_id ||
+		!question ||
+		!type ||
+		!level ||
+		!options ||
+		!answers ||
+		!category
+	) {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
 	}
@@ -979,7 +1000,8 @@ const updateQuestion = asyncHandler(async (req, res, next) => {
 		level,
 		op,
 		as,
-		tid
+		tid,
+		category
 	);
 	if (que.affectedRows > 0) {
 		res
@@ -995,9 +1017,18 @@ const updateSpellingQuestion = asyncHandler(async (req, res, next) => {
 	const reqEmail = req.teacher[0][0].email;
 	const [teacher, _] = await Teacher.findByEmail(reqEmail);
 	const tid = teacher[0].teacher_id;
-	const { id, quiz_id, type, level, address, word, hint } = req.body;
+	const { id, quiz_id, type, level, address, word, hint, category } = req.body;
 
-	if (!id || !quiz_id || !type || !level || !address || !word || !hint) {
+	if (
+		!id ||
+		!quiz_id ||
+		!type ||
+		!level ||
+		!address ||
+		!word ||
+		!hint ||
+		!category
+	) {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
 	}
@@ -1010,7 +1041,8 @@ const updateSpellingQuestion = asyncHandler(async (req, res, next) => {
 		address,
 		word,
 		hint,
-		tid
+		tid,
+		category
 	);
 	if (que.affectedRows > 0) {
 		res

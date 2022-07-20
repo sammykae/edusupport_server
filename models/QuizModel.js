@@ -162,10 +162,11 @@ class Quizzes {
 		level,
 		options,
 		answers,
-		teacher_id
+		teacher_id,
+		category
 	) {
-		let sql = `insert into questions (quiz_id,question,type,level,options,answers,teacher_id) values(
-			'${quiz_id}','${question}','${type}','${level}','${options}','${answers}','${teacher_id}'
+		let sql = `insert into questions (quiz_id,question,type,level,category,options,answers,teacher_id) values(
+			'${quiz_id}','${question}','${type}','${level}','${category}','${options}','${answers}','${teacher_id}'
 		)`;
 
 		const [reply, _] = await db.execute(sql);
@@ -182,10 +183,11 @@ class Quizzes {
 		address,
 		word,
 		hint,
-		teacher_id
+		teacher_id,
+		category
 	) {
-		let sql = `insert into spelling_questions (quiz_id,type,level,address,word,hint,teacher_id) values(
-			'${quiz_id}','${type}','${level}','${address}','${word}','${hint}','${teacher_id}'
+		let sql = `insert into spelling_questions (quiz_id,type,level,categoty,address,word,hint,teacher_id) values(
+			'${quiz_id}','${type}','${level}','${category}','${address}','${word}','${hint}','${teacher_id}'
 		)`;
 
 		const [reply, _] = await db.execute(sql);
@@ -203,12 +205,14 @@ class Quizzes {
 		level,
 		options,
 		answers,
-		teacher_id
+		teacher_id,
+		category
 	) {
 		let sql = `update questions set 
 		question='${question}',
 		type='${type}',
 		level='${level}',
+		category='${category}',
 		options='${options}',
 		answers='${answers}',
 		teacher_id='${teacher_id}'
@@ -225,11 +229,13 @@ class Quizzes {
 		address,
 		word,
 		hint,
-		teacher_id
+		teacher_id,
+		category
 	) {
 		let sql = `update spelling_questions set 
 		type='${type}',
 		level='${level}',
+		category='${category}',
 		address='${address}',
 		word='${word}',
 		hint='${hint}',
