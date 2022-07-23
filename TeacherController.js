@@ -421,7 +421,7 @@ const deleteClass = asyncHandler(async (req, res, next) => {
 const createQuiz = asyncHandler(async (req, res, next) => {
 	const {
 		quiz_name,
-		// no_level,
+		no_level,
 		dur_level,
 		subject,
 		point,
@@ -434,7 +434,7 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 
 	if (
 		!quiz_name ||
-		// !no_level ||
+		!no_level ||
 		!dur_level ||
 		!subject ||
 		!point ||
@@ -485,9 +485,9 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 		const ispaid = paid[0].plan;
 		console.log(ispaid);
 		if (ispaid === "free") {
-			if (category.length > 1) {
+			if (no_level > 1) {
 				res.status(400);
-				throw new Error("Organisation Not Subscribed. Max Category is One");
+				throw new Error("Organisation Not Subscribed. Max Level is One");
 			}
 			const [quiz, _____] = await Quizzes.findByAdminId(aid);
 			if (quiz.length >= 2) {
@@ -503,7 +503,7 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 					aid,
 					tid,
 					newQuizName,
-					// no_level,
+					no_level,
 					dur_level,
 					subject,
 					point,
@@ -523,7 +523,7 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 								admin_id: aid,
 								teacher_id: tid,
 								quiz_name: newQuizName,
-								// no_level: Number(no_level),
+								no_level: Number(no_level),
 								dur_level: Number(dur_level),
 								subject: subject,
 								point: Number(point),
@@ -551,7 +551,7 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 				aid,
 				tid,
 				newQuizName,
-				// no_level,
+				no_level,
 				dur_level,
 				subject,
 				point,
@@ -571,7 +571,7 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 							admin_id: aid,
 							teacher_id: tid,
 							quiz_name: newQuizName,
-							// no_level: Number(no_level),
+							no_level: Number(no_level),
 							dur_level: Number(dur_level),
 							subject: subject,
 							point: Number(point),
@@ -662,7 +662,7 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 	const {
 		quiz_id,
 		quiz_name,
-		// no_level,
+		no_level,
 		dur_level,
 		subject,
 		point,
@@ -676,7 +676,7 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 	if (
 		!quiz_id ||
 		!quiz_name ||
-		// !no_level ||
+		!no_level ||
 		!dur_level ||
 		!subject ||
 		!point ||
@@ -717,10 +717,10 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 					throw new Error("One Or Class Doesn't Exist!");
 				} else {
 					if (ispaid === "free") {
-						if (category.length > 1) {
+						if (no_level > 1) {
 							res.status(400);
 							throw new Error(
-								"Organisation not subscribed. Max Category is One."
+								"Organisation not subscribed. Max Level is One Max."
 							);
 						} else {
 							all = JSON.stringify(all);
@@ -728,7 +728,7 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 								quiz_id,
 								tid,
 								newQuizName,
-								// no_level,
+								no_level,
 								dur_level,
 								subject,
 								point,
@@ -758,7 +758,7 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 							quiz_id,
 							tid,
 							newQuizName,
-							// no_level,
+							no_level,
 							dur_level,
 							subject,
 							point,
@@ -802,10 +802,10 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 				throw new Error("One Or Class Doesn't Exist!");
 			} else {
 				if (ispaid === "free") {
-					if (category.length > 1) {
+					if (no_level > 1) {
 						res.status(400);
 						throw new Error(
-							"Organisation not subscribed. Max Category is One."
+							"Organisation not subscribed. Max Level is One Max."
 						);
 					} else {
 						all = JSON.stringify(all);
@@ -813,7 +813,7 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 							quiz_id,
 							tid,
 							newQuizName,
-							// no_level,
+							no_level,
 							dur_level,
 							subject,
 							point,
@@ -843,7 +843,7 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 						quiz_id,
 						tid,
 						newQuizName,
-						// no_level,
+						no_level,
 						dur_level,
 						subject,
 						point,
@@ -900,13 +900,14 @@ const setQuestion = asyncHandler(async (req, res, next) => {
 	const reqEmail = req.teacher[0][0].email;
 	const [teacher, _] = await Teacher.findByEmail(reqEmail);
 	const tid = teacher[0].teacher_id;
-	const { quiz_id, question, type, options, answers, category } = req.body;
+	const { quiz_id, question, type, level, options, answers, category } =
+		req.body;
 
 	if (
 		!quiz_id ||
 		!question ||
 		!type ||
-		// !level ||
+		!level ||
 		!options ||
 		!answers ||
 		!category
@@ -931,7 +932,7 @@ const setQuestion = asyncHandler(async (req, res, next) => {
 		quiz_id,
 		question,
 		type,
-		// level,
+		level,
 		op,
 		as,
 		tid,
@@ -951,9 +952,9 @@ const setSpellingQuestion = asyncHandler(async (req, res, next) => {
 	const reqEmail = req.teacher[0][0].email;
 	const [teacher, _] = await Teacher.findByEmail(reqEmail);
 	const tid = teacher[0].teacher_id;
-	const { quiz_id, type, address, word, hint, category } = req.body;
+	const { quiz_id, type, level, address, word, hint, category } = req.body;
 
-	if (!quiz_id || !type || !address || !word || !hint || !category) {
+	if (!quiz_id || !type || !level || !address || !word || !hint || !category) {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
 	}
@@ -971,7 +972,7 @@ const setSpellingQuestion = asyncHandler(async (req, res, next) => {
 	const [que, __] = await Quizzes.setSpellingQuestion(
 		quiz_id,
 		type,
-		// level,
+		level,
 		address,
 		word,
 		hint,
@@ -992,14 +993,15 @@ const updateQuestion = asyncHandler(async (req, res, next) => {
 	const reqEmail = req.teacher[0][0].email;
 	const [teacher, _] = await Teacher.findByEmail(reqEmail);
 	const tid = teacher[0].teacher_id;
-	const { id, quiz_id, question, type, options, answers, category } = req.body;
+	const { id, quiz_id, question, type, level, options, answers, category } =
+		req.body;
 
 	if (
 		!id ||
 		!quiz_id ||
 		!question ||
 		!type ||
-		// !level ||
+		!level ||
 		!options ||
 		!answers ||
 		!category
@@ -1025,7 +1027,7 @@ const updateQuestion = asyncHandler(async (req, res, next) => {
 		quiz_id,
 		question,
 		type,
-		// level,
+		level,
 		op,
 		as,
 		tid,
@@ -1045,13 +1047,13 @@ const updateSpellingQuestion = asyncHandler(async (req, res, next) => {
 	const reqEmail = req.teacher[0][0].email;
 	const [teacher, _] = await Teacher.findByEmail(reqEmail);
 	const tid = teacher[0].teacher_id;
-	const { id, quiz_id, type, address, word, hint, category } = req.body;
+	const { id, quiz_id, type, level, address, word, hint, category } = req.body;
 
 	if (
 		!id ||
 		!quiz_id ||
 		!type ||
-		// !level ||
+		!level ||
 		!address ||
 		!word ||
 		!hint ||
@@ -1075,7 +1077,7 @@ const updateSpellingQuestion = asyncHandler(async (req, res, next) => {
 		id,
 		quiz_id,
 		type,
-		// level,
+		level,
 		address,
 		word,
 		hint,
