@@ -481,7 +481,7 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 	} else {
 		const [paid, ____] = await Teacher.paid(aid);
 		const ispaid = paid[0].plan;
-		console.log(ispaid);
+
 		if (ispaid === "free") {
 			if (category.length > 1) {
 				res.status(400);
