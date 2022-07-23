@@ -18,6 +18,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 		const [quiz, __] = await Quizzes.findByIdStudent(id);
 
 		if (quiz.length > 0) {
+			const category = quiz[0].category;
 			if (quiz[0].quiz_type === "spelling") {
 				let [que, _] = await Quizzes.getSpellingQuestionStudent(id);
 
@@ -77,6 +78,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 					res.status(200).json({
 						data: result,
 						quiz_type: quiz[0].quiz_type,
+						category: category,
 						message: "Answers Found",
 					});
 				} else {
@@ -246,6 +248,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 					res.status(200).json({
 						data: result,
 						quiz_type: quiz[0].quiz_type,
+						category: category,
 						message: "Answers Found",
 					});
 				} else {
