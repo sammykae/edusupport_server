@@ -1016,7 +1016,7 @@ const updateQuestion = asyncHandler(async (req, res, next) => {
 	} else {
 		if (quizes[0].status === "publish") {
 			res.status(400);
-			throw new Error("You can't add question to a published quiz");
+			throw new Error("You can't edit question of a published quiz");
 		}
 	}
 	let op = options;
@@ -1069,7 +1069,7 @@ const updateSpellingQuestion = asyncHandler(async (req, res, next) => {
 	} else {
 		if (quizes[0].status === "publish") {
 			res.status(400);
-			throw new Error("You can't add question to a published quiz");
+			throw new Error("You can't edit question of a published quiz");
 		}
 	}
 
