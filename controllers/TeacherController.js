@@ -421,7 +421,6 @@ const deleteClass = asyncHandler(async (req, res, next) => {
 const createQuiz = asyncHandler(async (req, res, next) => {
 	const {
 		quiz_name,
-		// no_level,
 		dur_level,
 		subject,
 		point,
@@ -434,7 +433,6 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 
 	if (
 		!quiz_name ||
-		// !no_level ||
 		!dur_level ||
 		!subject ||
 		!point ||
@@ -503,7 +501,6 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 					aid,
 					tid,
 					newQuizName,
-					// no_level,
 					dur_level,
 					subject,
 					point,
@@ -523,7 +520,6 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 								admin_id: aid,
 								teacher_id: tid,
 								quiz_name: newQuizName,
-								// no_level: Number(no_level),
 								dur_level: Number(dur_level),
 								subject: subject,
 								point: Number(point),
@@ -551,7 +547,6 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 				aid,
 				tid,
 				newQuizName,
-				// no_level,
 				dur_level,
 				subject,
 				point,
@@ -571,7 +566,6 @@ const createQuiz = asyncHandler(async (req, res, next) => {
 							admin_id: aid,
 							teacher_id: tid,
 							quiz_name: newQuizName,
-							// no_level: Number(no_level),
 							dur_level: Number(dur_level),
 							subject: subject,
 							point: Number(point),
@@ -662,7 +656,6 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 	const {
 		quiz_id,
 		quiz_name,
-		// no_level,
 		dur_level,
 		subject,
 		point,
@@ -676,7 +669,6 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 	if (
 		!quiz_id ||
 		!quiz_name ||
-		// !no_level ||
 		!dur_level ||
 		!subject ||
 		!point ||
@@ -728,7 +720,6 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 								quiz_id,
 								tid,
 								newQuizName,
-								// no_level,
 								dur_level,
 								subject,
 								point,
@@ -758,7 +749,6 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 							quiz_id,
 							tid,
 							newQuizName,
-							// no_level,
 							dur_level,
 							subject,
 							point,
@@ -813,7 +803,6 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 							quiz_id,
 							tid,
 							newQuizName,
-							// no_level,
 							dur_level,
 							subject,
 							point,
@@ -843,7 +832,6 @@ const updateQuiz = asyncHandler(async (req, res, next) => {
 						quiz_id,
 						tid,
 						newQuizName,
-						// no_level,
 						dur_level,
 						subject,
 						point,
@@ -902,15 +890,7 @@ const setQuestion = asyncHandler(async (req, res, next) => {
 	const tid = teacher[0].teacher_id;
 	const { quiz_id, question, type, options, answers, category } = req.body;
 
-	if (
-		!quiz_id ||
-		!question ||
-		!type ||
-		// !level ||
-		!options ||
-		!answers ||
-		!category
-	) {
+	if (!quiz_id || !question || !type || !options || !answers || !category) {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
 	}
@@ -931,7 +911,6 @@ const setQuestion = asyncHandler(async (req, res, next) => {
 		quiz_id,
 		question,
 		type,
-		// level,
 		op,
 		as,
 		tid,
@@ -971,7 +950,6 @@ const setSpellingQuestion = asyncHandler(async (req, res, next) => {
 	const [que, __] = await Quizzes.setSpellingQuestion(
 		quiz_id,
 		type,
-		// level,
 		address,
 		word,
 		hint,
@@ -999,7 +977,6 @@ const updateQuestion = asyncHandler(async (req, res, next) => {
 		!quiz_id ||
 		!question ||
 		!type ||
-		// !level ||
 		!options ||
 		!answers ||
 		!category
@@ -1025,7 +1002,6 @@ const updateQuestion = asyncHandler(async (req, res, next) => {
 		quiz_id,
 		question,
 		type,
-		// level,
 		op,
 		as,
 		tid,
@@ -1047,16 +1023,7 @@ const updateSpellingQuestion = asyncHandler(async (req, res, next) => {
 	const tid = teacher[0].teacher_id;
 	const { id, quiz_id, type, address, word, hint, category } = req.body;
 
-	if (
-		!id ||
-		!quiz_id ||
-		!type ||
-		// !level ||
-		!address ||
-		!word ||
-		!hint ||
-		!category
-	) {
+	if (!id || !quiz_id || !type || !address || !word || !hint || !category) {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
 	}
@@ -1075,7 +1042,6 @@ const updateSpellingQuestion = asyncHandler(async (req, res, next) => {
 		id,
 		quiz_id,
 		type,
-		// level,
 		address,
 		word,
 		hint,

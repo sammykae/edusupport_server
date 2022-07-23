@@ -6,7 +6,6 @@ class Quizzes {
 		admin_id,
 		teacher_id,
 		quiz_name,
-		// no_level,
 		dur_level,
 		subject,
 		point,
@@ -23,7 +22,6 @@ class Quizzes {
 			'${admin_id}',
 			'${teacher_id}',
             '${quiz_name}',
-		
 			'${category}',
             '${dur_level}',
             '${subject}',
@@ -44,7 +42,6 @@ class Quizzes {
 		quiz_id,
 		teacher_id,
 		quiz_name,
-		// no_level,
 		dur_level,
 		subject,
 		point,
@@ -157,7 +154,6 @@ class Quizzes {
 		quiz_id,
 		question,
 		type,
-		// level,
 		options,
 		answers,
 		teacher_id,
@@ -184,7 +180,7 @@ class Quizzes {
 		teacher_id,
 		category
 	) {
-		let sql = `insert into spelling_questions (quiz_id,type,categoty,address,word,hint,teacher_id) values(
+		let sql = `insert into spelling_questions (quiz_id,type,category,address,word,hint,teacher_id) values(
 			'${quiz_id}','${type}','${category}','${address}','${word}','${hint}','${teacher_id}'
 		)`;
 
@@ -200,7 +196,6 @@ class Quizzes {
 		quiz_id,
 		question,
 		type,
-		// level,
 		options,
 		answers,
 		teacher_id,
