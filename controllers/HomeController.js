@@ -13,7 +13,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 	const [answer, __] = await Quizzes.getAnswer(sid, id);
 	if (answer.length > 0) {
 		let ans = answer[0].answers;
-		console.log(ans);
+
 		let result = [];
 		const [quiz, __] = await Quizzes.findByIdStudent(id);
 
@@ -28,6 +28,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 								if (e.word.toLowerCase() === d.word.toLowerCase()) {
 									result.push({
 										question: d.word,
+										category: d.category,
 										type: d.type,
 										correct_ans: d.word,
 										student_ans: e.word,
@@ -36,6 +37,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 								} else {
 									result.push({
 										question: d.word,
+										category: d.category,
 										type: d.type,
 										correct_ans: d.word,
 										student_ans: e.word,
@@ -50,6 +52,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 						if (!temp) {
 							result.push({
 								question: d.word,
+								category: d.category,
 								type: d.type,
 								correct_ans: d.word,
 								student_ans: "",
@@ -61,6 +64,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 					que.map((d) => {
 						result.push({
 							question: d.word,
+							category: d.category,
 							type: d.type,
 							correct_ans: d.word,
 							student_ans: "",
@@ -96,6 +100,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 										if (check) {
 											result.push({
 												question: d.question,
+												category: d.category,
 												type: d.type,
 												correct_ans: d.answers,
 												student_ans: e.options,
@@ -104,6 +109,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 										} else {
 											result.push({
 												question: d.question,
+												category: d.category,
 												type: d.type,
 												correct_ans: d.answers,
 												student_ans: e.options,
@@ -130,6 +136,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 										if (check) {
 											result.push({
 												question: d.question,
+												category: d.category,
 												type: d.type,
 												correct_ans: d.answers,
 												student_ans: e.options,
@@ -138,6 +145,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 										} else {
 											result.push({
 												question: d.question,
+												category: d.category,
 												type: d.type,
 												correct_ans: d.answers,
 												student_ans: e.options,
@@ -147,6 +155,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 									} else {
 										result.push({
 											question: d.question,
+											category: d.category,
 											type: d.type,
 											correct_ans: d.answers,
 											student_ans: e.options,
@@ -167,6 +176,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 										if (check) {
 											result.push({
 												question: d.question,
+												category: d.category,
 												type: d.type,
 												correct_ans: d.answers,
 												student_ans: e.options,
@@ -175,6 +185,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 										} else {
 											result.push({
 												question: d.question,
+												category: d.category,
 												type: d.type,
 												correct_ans: d.answers,
 												student_ans: e.options,
@@ -186,6 +197,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 									if (e.options === d.answers[0]) {
 										result.push({
 											question: d.question,
+											category: d.category,
 											type: d.type,
 											correct_ans: d.answers,
 											student_ans: e.options,
@@ -194,6 +206,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 									} else {
 										result.push({
 											question: d.question,
+											category: d.category,
 											type: d.type,
 											correct_ans: d.answers,
 											student_ans: e.options,
@@ -209,6 +222,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 						if (!temp) {
 							result.push({
 								question: d.question,
+								category: d.category,
 								type: d.type,
 								correct_ans: d.answers,
 								student_ans: [],
@@ -220,6 +234,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 					que.map((d) => {
 						result.push({
 							question: d.question,
+							category: d.category,
 							type: d.type,
 							correct_ans: d.answers,
 							student_ans: [],
