@@ -811,9 +811,17 @@ const score = asyncHandler(async (req, res, next) => {
 				);
 
 				if (result.affectedRows > 0) {
-					res
-						.status(200)
-						.json({ data: score[0], message: "Result Saved successfully!" });
+					res.status(200).json({
+						data: {
+							point: student_point,
+							percent: Math.round(student_grade),
+							right_answers: rightQue,
+							wrong_answers: wrongQue,
+							status: status,
+							time_taken: time_taken,
+						},
+						message: "Result Saved successfully!",
+					});
 				} else {
 					res.status(400);
 					throw new Error("Failed to save result");
@@ -922,9 +930,17 @@ const score = asyncHandler(async (req, res, next) => {
 				);
 
 				if (result.affectedRows > 0) {
-					res
-						.status(200)
-						.json({ data: score[0], message: "Result Saved successfully!" });
+					res.status(200).json({
+						data: {
+							point: student_point,
+							percent: Math.round(student_grade),
+							right_answers: rightQue,
+							wrong_answers: wrongQue,
+							status: status,
+							time_taken: time_taken,
+						},
+						message: "Result Saved successfully!",
+					});
 				} else {
 					res.status(400);
 					throw new Error("Failed to save result");
