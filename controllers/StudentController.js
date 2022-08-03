@@ -806,29 +806,14 @@ const score = asyncHandler(async (req, res, next) => {
 					rightQue,
 					wrongQue,
 					status,
-					time_taken
+					time_taken,
+					JSON.stringify(save).replaceAll("\\n", " ")
 				);
 
 				if (result.affectedRows > 0) {
-					let toSave = JSON.stringify(save).replaceAll("\\n", " ");
-
-					const [saves, _] = await Quizzes.saveAnswer(
-						quiz_id,
-						sid,
-						toSave.replaceAll("\\n", " ")
-					);
-
-					if (saves.affectedRows > 0) {
-						const [score, __] = await Quizzes.getResult(sid, quiz_id);
-						res
-							.status(200)
-							.json({ data: score[0], message: "Result Saved successfully!" });
-					} else {
-						res.status(400);
-						throw new Error(
-							"Result Saved but an Error occured storing answers"
-						);
-					}
+					res
+						.status(200)
+						.json({ data: score[0], message: "Result Saved successfully!" });
 				} else {
 					res.status(400);
 					throw new Error("Failed to save result");
@@ -932,28 +917,14 @@ const score = asyncHandler(async (req, res, next) => {
 					rightQue,
 					wrongQue,
 					status,
-					time_taken
+					time_taken,
+					JSON.stringify(save).replaceAll("\\n", " ")
 				);
 
 				if (result.affectedRows > 0) {
-					let toSave = JSON.stringify(save).replaceAll("\\n", " ");
-
-					const [saves, _] = await Quizzes.saveAnswer(
-						quiz_id,
-						sid,
-						toSave.replaceAll("\\n", " ")
-					);
-					if (saves.affectedRows > 0) {
-						const [score, __] = await Quizzes.getResult(sid, quiz_id);
-						res
-							.status(200)
-							.json({ data: score[0], message: "Result Saved successfully!" });
-					} else {
-						res.status(400);
-						throw new Error(
-							"Result Saved but an Error occured storing answers"
-						);
-					}
+					res
+						.status(200)
+						.json({ data: score[0], message: "Result Saved successfully!" });
 				} else {
 					res.status(400);
 					throw new Error("Failed to save result");

@@ -10,10 +10,10 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
 	}
-	const [answer, __] = await Quizzes.getAnswer(sid, id);
+	const [answer, __] = await Quizzes.getResult(sid, id);
 	if (answer.length > 0) {
-		let ans = answer[0].answers;
-
+		let ans = answer[0]?.answers;
+		console.log(answer);
 		let result = [];
 		const [quiz, __] = await Quizzes.findByIdStudent(id);
 
@@ -22,9 +22,9 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 			if (quiz[0].quiz_type === "spelling") {
 				let [que, _] = await Quizzes.getSpellingQuestionStudent(id);
 
-				if (ans.length > 0) {
-					ans.map((e) => {
-						que.map((d) => {
+				if (ans?.length > 0) {
+					ans?.map((e) => {
+						que?.map((d) => {
 							if (e.id === d.id) {
 								if (e.word.toLowerCase() === d.word.toLowerCase()) {
 									result.push({
@@ -48,8 +48,8 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 							}
 						});
 					});
-					que.map((d) => {
-						let temp = ans.find((element) => element.id === d.id);
+					que?.map((d) => {
+						let temp = ans?.find((element) => element.id === d.id);
 						if (!temp) {
 							result.push({
 								question: d.word,
@@ -62,7 +62,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 						}
 					});
 				} else {
-					que.map((d) => {
+					que?.map((d) => {
 						result.push({
 							question: d.word,
 							category: d.category,
@@ -87,9 +87,9 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 				}
 			} else {
 				let [que, _] = await Quizzes.getQuestionStudent(id);
-				if (ans.length > 0 && que.length > 0) {
-					ans.map((e) => {
-						que.map((d) => {
+				if (ans?.length > 0 && que?.length > 0) {
+					ans?.map((e) => {
+						que?.map((d) => {
 							if (d.id === e.id) {
 								if (d.type === "mc") {
 									let check = true;
@@ -219,7 +219,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 							}
 						});
 					});
-					que.map((d) => {
+					que?.map((d) => {
 						let temp = ans.find((element) => element.id === d.id);
 						if (!temp) {
 							result.push({
@@ -233,7 +233,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 						}
 					});
 				} else {
-					que.map((d) => {
+					que?.map((d) => {
 						result.push({
 							question: d.question,
 							category: d.category,
