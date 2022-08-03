@@ -317,24 +317,10 @@ class Quizzes {
 		return db.execute(sql);
 	}
 
-	// static saveAnswer(quiz_id, student_id, answers) {
-	// 	let sql = `insert into answers (quiz_id,student_id,answers) values(
-	// 		'${quiz_id}',
-	// 		'${student_id}',
-	// 		'${answers}'
-	// 	)`;
-	// 	return db.execute(sql);
-	// }
-
 	static getResult(student_id, quiz_id) {
 		let sql = `select * from results where student_id='${student_id}' and quiz_id='${quiz_id}' order by id desc`;
 		return db.execute(sql);
 	}
-
-	// static getAnswer(student_id, quiz_id) {
-	// 	let sql = `select * from answers where student_id='${student_id}' and quiz_id='${quiz_id}'`;
-	// 	return db.execute(sql);
-	// }
 
 	static getAllResult(student_id) {
 		let sql = `select * from results where student_id='${student_id}' order by id desc`;
@@ -345,15 +331,8 @@ class Quizzes {
 		return db.execute(sql);
 	}
 	static async deleteScore(id, sid) {
-		// let sql = `delete from answers where student_id='${sid}' and quiz_id='${id}'`;
-
-		// const [reply, _] = await db.execute(sql);
-		// if (reply.affectedRows >= 0) {
 		let sql = `delete from results where student_id='${sid}' and quiz_id='${id}'`;
 		return db.execute(sql);
-		// } else {
-		// 	return db.execute(sql);
-		// }
 	}
 
 	static updateName(quiz_id, name) {

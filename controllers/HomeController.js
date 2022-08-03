@@ -13,7 +13,6 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 	const [answer, __] = await Quizzes.getResult(sid, id);
 	if (answer.length > 0) {
 		let ans = answer[0]?.answers;
-		console.log(answer);
 		let result = [];
 		const [quiz, __] = await Quizzes.findByIdStudent(id);
 
@@ -118,6 +117,15 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 												correct: false,
 											});
 										}
+									} else {
+										result.push({
+											question: d.question,
+											category: d.category,
+											type: d.type,
+											correct_ans: d.answers,
+											student_ans: e.options,
+											correct: false,
+										});
 									}
 								} else if (d.type === "fg") {
 									let new_options = e.options.map((n) => {
@@ -194,6 +202,15 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 												correct: false,
 											});
 										}
+									} else {
+										result.push({
+											question: d.question,
+											category: d.category,
+											type: d.type,
+											correct_ans: d.answers,
+											student_ans: e.options,
+											correct: false,
+										});
 									}
 								} else {
 									if (e.options === d.answers[0]) {
@@ -265,6 +282,7 @@ const viewAnswers = asyncHandler(async (req, res, next) => {
 		throw new Error("No Answers Found");
 	}
 });
+
 module.exports = {
 	home,
 	viewAnswers,
