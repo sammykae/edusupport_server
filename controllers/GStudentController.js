@@ -312,13 +312,35 @@ const postSub = asyncHandler(async (req, res, next) => {
 		throw new Error("One or more field empty. Try Again");
 	}
 
-	const sub = await GStudent.paid(student[0].student_id, plan, ref, dur);
-	if (sub.affectedRows > 0) {
-		res.status(200).json({ data: [], message: "Subscription Successful" });
+	const [check, __] = await GStudent.checkSub(student[0].student_id);
+	if (check?.length <= 0) {
+		const [create, __] = await GStudent.createSub(student[0].student_id);
+		if (create.affectedRows > 0) {
+			const sub = await GStudent.paid(student[0].student_id, plan, ref, dur);
+			if (sub.affectedRows > 0) {
+				res.status(200).json({ data: [], message: "Subscription Successful" });
+			} else {
+				res.status(200).json({
+					data: [],
+					message: "An Error Occured. Subscription Failed!",
+				});
+			}
+		} else {
+			res.status(200).json({
+				data: [],
+				message: "An Error Occured. Subscription Failed!",
+			});
+		}
 	} else {
-		res
-			.status(200)
-			.json({ data: [], message: "An Error Occured. Subscription Failed!" });
+		const sub = await GStudent.paid(student[0].student_id, plan, ref, dur);
+		if (sub.affectedRows > 0) {
+			res.status(200).json({ data: [], message: "Subscription Successful" });
+		} else {
+			res.status(200).json({
+				data: [],
+				message: "An Error Occured. Subscription Failed!",
+			});
+		}
 	}
 });
 

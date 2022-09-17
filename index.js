@@ -8,6 +8,7 @@ const app = express();
 var cron = require("node-cron");
 const nodemailer = require("nodemailer");
 const Admin = require("./models/AdminModel");
+const { GStudent } = require("./models/StudentModel");
 app.use(cors());
 //
 // BODY PARSING
@@ -28,6 +29,13 @@ cron.schedule("0 0 0 * * *", async () => {
 	if (sub.length > 0) {
 		for (let off of sub) {
 			await Sub.update(off.admin_id);
+		}
+	}
+
+	const [sub_student, __] = await Sub.select_student();
+	if (sub_student.length > 0) {
+		for (let off of sub_student) {
+			await Sub.update_student(off.student_id);
 		}
 	}
 });
@@ -61,6 +69,33 @@ cron.schedule("00 00 9 * * *", async () => {
 		sub.map(async (a) => {
 			if (a.expiry <= 5 && a.expiry > 0) {
 				const [email, _] = await Admin.findById(a.admin_id);
+				var mailOptions = {
+					from: "efosajoseph@gmail.com",
+					to: `${email[0].email}`,
+					subject: "Edusupport Subscription Notice",
+					html: `<h1>Notice!!</h1>
+					<p>Your Subscription as detailed below will expire in <b>${a.expiry}</b> day(s)</p>
+					<p>Plan: <b>${a.plan}</b></p>
+					<p>Subscription Date: ${a.date_sub}</p>
+					<p>Expiry Date: ${a.date_end}</p>`,
+				};
+
+				transporter.sendMail(mailOptions, function (error, info) {
+					if (error) {
+						console.log(error);
+					} else {
+						console.log("Email sent: " + info.response);
+					}
+				});
+			}
+		});
+	}
+
+	const [sub_student, __] = await Sub.selectDateDiff();
+	if (sub_student.length > 0) {
+		sub_student.map(async (a) => {
+			if (a.expiry <= 5 && a.expiry > 0) {
+				const [email, _] = await GStudent.findById(a.student_id);
 				var mailOptions = {
 					from: "efosajoseph@gmail.com",
 					to: `${email[0].email}`,

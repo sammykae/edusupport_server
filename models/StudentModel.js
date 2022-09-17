@@ -241,6 +241,10 @@ class GStudent {
 		values ('${id}','free','${ref}',now(),adddate(now(),interval 1 year))`;
 		return db.execute(sql);
 	}
+	static checkSub(id) {
+		let sql = `select * from  student_sub where student_id='${id}'`;
+		return db.execute(sql);
+	}
 
 	static async paid(id, plan, ref, newDur) {
 		let inv;
