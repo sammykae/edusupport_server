@@ -292,7 +292,7 @@ const getSub = asyncHandler(async (req, res, next) => {
 		res.status(404);
 		throw new Error("Student Not Found");
 	}
-	const sub = await student.getPaid(student[0].student_id);
+	const sub = await GStudent.getPaid(student[0].student_id);
 
 	res.status(200).json(sub);
 });
