@@ -128,6 +128,13 @@ class InStudent {
 		let sql = `select * from students where admin_id = '${id}'`;
 		return db.execute(sql);
 	}
+
+	static createSub(id) {
+		const ref = id;
+		let sql = `insert into student_sub (student_id,plan,reference,date_sub,date_end) 
+		values ('${id}','free','${ref}',now(),adddate(now(),interval 1 year))`;
+		return db.execute(sql);
+	}
 }
 
 class GStudent {
@@ -227,6 +234,54 @@ class GStudent {
 	static delete(admin_id, id) {
 		let sql = `delete from students where student_id='${id}' and admin_id = '${admin_id}'`;
 		return db.execute(sql);
+	}
+	static createSub(id) {
+		const ref = id;
+		let sql = `insert into student_sub (student_id,plan,reference,date_sub,date_end) 
+		values ('${id}','free','${ref}',now(),adddate(now(),interval 1 year))`;
+		return db.execute(sql);
+	}
+
+	static async paid(id, plan, ref, newDur) {
+		let inv;
+		if (newDur === "6month") {
+			inv = "6 month";
+		} else if (newDur === "1year") {
+			inv = "1 year";
+		}
+		let sql = `update student_sub set 
+		plan='${plan}',
+		reference='${ref}',
+		date_sub=now(),
+		date_end=adddate(now(), interval ${inv})
+		where student_id='${id}'
+		`;
+
+		const [reply, _] = await db.execute(sql);
+		if (reply.affectedRows > 0) {
+			const pay = "true";
+			let sql = `update students set paid='${pay}' where student_id='${id}'`;
+			const [reply, _] = await db.execute(sql);
+			return reply;
+		} else {
+			return { affectedRows: 0, message: "Could Not Save subscription" };
+		}
+	}
+
+	static async getPaid(id) {
+		let sql = `select paid from students where student_id='${id}'`;
+
+		const [reply, _] = await db.execute(sql);
+
+		if (reply[0].paid === "false") {
+			let sql = `select * from student_sub where student_id='${id}'`;
+			const [reply, _] = await db.execute(sql);
+			return { ...reply[0], paid: "false" };
+		} else {
+			let sql = `select * from student_sub where student_id='${id}'`;
+			const [reply, _] = await db.execute(sql);
+			return { ...reply[0], paid: "true" };
+		}
 	}
 }
 

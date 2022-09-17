@@ -80,7 +80,7 @@ class Admin {
 	static createSub(id) {
 		const ref = id;
 		let sql = `insert into subscription (admin_id,plan,reference,date_sub,date_end) 
-		values ('${id}','free','${ref}',now(),adddate(now(),interval 1 month))`;
+		values ('${id}','free','${ref}',now(),adddate(now(),interval 1 year))`;
 		return db.execute(sql);
 	}
 

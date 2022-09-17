@@ -130,7 +130,7 @@ const createStudent = asyncHandler(async (req, res, next) => {
 			);
 
 			await AllUsers.save(id, username, email);
-
+			await InStudent.createSub(id);
 			await student.save();
 			const [newUser, ____] = await InStudent.findByEmail(email);
 			if (newUser) {
@@ -181,7 +181,7 @@ const createStudent = asyncHandler(async (req, res, next) => {
 			);
 
 			await AllUsers.save(id, username, email);
-
+			await InStudent.createSub(id);
 			await student.save();
 			const [newUser, ____] = await InStudent.findByEmail(email);
 			if (newUser) {
@@ -232,7 +232,7 @@ const createStudent = asyncHandler(async (req, res, next) => {
 			);
 
 			await AllUsers.save(id, username, email);
-
+			await InStudent.createSub(id);
 			await student.save();
 			const [newUser, ____] = await InStudent.findByEmail(email);
 			if (newUser) {
@@ -283,7 +283,7 @@ const createStudent = asyncHandler(async (req, res, next) => {
 			);
 
 			await AllUsers.save(id, username, email);
-
+			await InStudent.createSub(id);
 			await student.save();
 			const [newUser, ____] = await InStudent.findByEmail(email);
 			if (newUser) {
@@ -327,7 +327,7 @@ const createStudent = asyncHandler(async (req, res, next) => {
 		);
 
 		await AllUsers.save(id, username, email);
-
+		await InStudent.createSub(id);
 		await student.save();
 		const [newUser, ____] = await InStudent.findByEmail(email);
 		if (newUser) {

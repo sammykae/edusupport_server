@@ -1,6 +1,5 @@
 const rand = require("../IdGenerator");
 const { GStudent } = require("../models/StudentModel");
-
 const AllUsers = require("../models/AllUserModel");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
@@ -111,7 +110,7 @@ const gcreateStudent = asyncHandler(async (req, res, next) => {
 	);
 
 	await AllUsers.save(id, username, email);
-
+	await GStudent.createSub(id);
 	await student.save();
 	const [newUser, ____] = await GStudent.findByEmail(email);
 	if (newUser) {
@@ -286,6 +285,48 @@ const ggetQuizzes = asyncHandler(async (req, res, next) => {
 	}
 });
 
+const getSub = asyncHandler(async (req, res, next) => {
+	const reqEmail = req.admin[0][0].email;
+	const [admin, _] = await Admin.findByEmail(reqEmail);
+	if (admin.length === 0) {
+		res.status(404);
+		throw new Error("Admin Not Found");
+	}
+	const sub = await Admin.getPaid(admin[0].admin_id);
+
+	res.status(200).json(sub);
+});
+
+const postSub = asyncHandler(async (req, res, next) => {
+	const reqEmail = req.admin[0][0].email;
+	const [admin, _] = await Admin.findByEmail(reqEmail);
+	if (admin.length === 0) {
+		res.status(404);
+		throw new Error("Admin Not Found");
+	}
+
+	const { dur, plan, ref } = req.body;
+
+	if (!plan || !ref || !dur) {
+		res.status(400);
+		throw new Error("One or more field empty. Try Again");
+	}
+
+	let newDur = dur;
+	if (plan === "supreme") {
+		newDur = "1year";
+	}
+
+	const sub = await Admin.paid(admin[0].admin_id, plan, ref, newDur);
+	if (sub.affectedRows > 0) {
+		res.status(200).json({ data: [], message: "Subscription Successful" });
+	} else {
+		res
+			.status(200)
+			.json({ data: [], message: "An Error Occured. Subscription Failed!" });
+	}
+});
+
 module.exports = {
 	gcreateStudent,
 	gupdateStudent,
@@ -293,4 +334,6 @@ module.exports = {
 	ggetStudentData,
 	ggetQuizzes,
 	updatePassword,
+	getSub,
+	postSub,
 };
