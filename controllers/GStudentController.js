@@ -286,23 +286,23 @@ const ggetQuizzes = asyncHandler(async (req, res, next) => {
 });
 
 const getSub = asyncHandler(async (req, res, next) => {
-	const reqEmail = req.admin[0][0].email;
-	const [admin, _] = await Admin.findByEmail(reqEmail);
-	if (admin.length === 0) {
+	const reqEmail = req.student[0][0].email;
+	const [student, _] = await GStudent.findByEmail(reqEmail);
+	if (student.length === 0) {
 		res.status(404);
-		throw new Error("Admin Not Found");
+		throw new Error("Student Not Found");
 	}
-	const sub = await Admin.getPaid(admin[0].admin_id);
+	const sub = await student.getPaid(student[0].student_id);
 
 	res.status(200).json(sub);
 });
 
 const postSub = asyncHandler(async (req, res, next) => {
-	const reqEmail = req.admin[0][0].email;
-	const [admin, _] = await Admin.findByEmail(reqEmail);
-	if (admin.length === 0) {
+	const reqEmail = req.student[0][0].email;
+	const [student, _] = await GStudent.findByEmail(reqEmail);
+	if (student.length === 0) {
 		res.status(404);
-		throw new Error("Admin Not Found");
+		throw new Error("Student Not Found");
 	}
 
 	const { dur, plan, ref } = req.body;
@@ -312,12 +312,7 @@ const postSub = asyncHandler(async (req, res, next) => {
 		throw new Error("One or more field empty. Try Again");
 	}
 
-	let newDur = dur;
-	if (plan === "supreme") {
-		newDur = "1year";
-	}
-
-	const sub = await Admin.paid(admin[0].admin_id, plan, ref, newDur);
+	const sub = await GStudent.paid(student[0].student_id, plan, ref, dur);
 	if (sub.affectedRows > 0) {
 		res.status(200).json({ data: [], message: "Subscription Successful" });
 	} else {

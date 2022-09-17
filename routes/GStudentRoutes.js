@@ -9,6 +9,8 @@ const {
 	ggetStudentData,
 	ggetQuizzes,
 	updatePassword,
+	getSub,
+	postSub,
 } = require("../controllers/GStudentController");
 const { protectInStudent } = require("../MiddleWare");
 
@@ -23,5 +25,9 @@ router
 	.put(protectInStudent, updatePassword);
 
 router.route("/quiz").get(protectInStudent, ggetQuizzes);
+router
+	.route("/sub")
+	.get(protectInStudent, getSub)
+	.post(protectInStudent, postSub);
 
 module.exports = router;
