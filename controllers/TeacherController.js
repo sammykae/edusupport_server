@@ -79,6 +79,11 @@ const createTeacher = asyncHandler(async (req, res, next) => {
 	if (admin.length <= 0) {
 		res.status(404);
 		throw new Error("Invalid Admin Id");
+	} else {
+		if (admin[0]?.admin_id !== admin_id) {
+			res.status(404);
+			throw new Error("Invalid Admin Id");
+		}
 	}
 
 	const [paid, ______] = await Teacher.paid(admin_id);

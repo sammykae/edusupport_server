@@ -83,12 +83,17 @@ const createStudent = asyncHandler(async (req, res, next) => {
 		res.status(400);
 		throw new Error("One or more field empty. Try Again");
 	}
+
 	const [admin, _____] = await Admin.findById(admin_id);
 	if (admin.length <= 0) {
 		res.status(404);
 		throw new Error("Invalid Admin Id");
+	} else {
+		if (admin[0]?.admin_id !== admin_id) {
+			res.status(404);
+			throw new Error("Invalid Admin Id");
+		}
 	}
-
 	const [paid, ______] = await InStudent.paid(admin_id);
 	const ispaid = paid[0].plan;
 	if (ispaid === "free") {
